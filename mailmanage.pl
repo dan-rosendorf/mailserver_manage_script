@@ -249,7 +249,11 @@ sub getMaxUserId {
 sub connect_db {
     my ($host, $database, $port) = @_;
     my $dsn = "DBI:MariaDB:host=$host;database=$database";
-    $dsn .= ";port=$port" if $port;
+    if($host ne 'localhost' && $port) {
+        $dsn .= ";port=$port";
+    }
+
+    
     
     my $dbh = DBI->connect($dsn, 'root', undef, {RaiseError => 0, PrintError => 1});
     
