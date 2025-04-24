@@ -3,11 +3,11 @@
 # filepath: h:\mailserver\test_mailmanage.sh
 
 echo "Setting up test environment..."
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS mailserver_test;"
-mysql -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_domains (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL);"
-mysql -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_users (id INT AUTO_INCREMENT PRIMARY KEY, domain_id INT NOT NULL, password VARCHAR(106) NOT NULL, email VARCHAR(120) NOT NULL, UNIQUE KEY (email));"
-mysql -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_aliases (id INT AUTO_INCREMENT PRIMARY KEY, domain_id INT NOT NULL, source VARCHAR(100) NOT NULL, destination VARCHAR(100) NOT NULL);"
-mysql -u root -e "USE mailserver_test; INSERT INTO virtual_domains (id, name) VALUES (1, 'test.com');"
+mariadb -u root -e "CREATE DATABASE IF NOT EXISTS mailserver_test;"
+mariadb -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_domains (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL);"
+mariadb -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_users (id INT AUTO_INCREMENT PRIMARY KEY, domain_id INT NOT NULL, password VARCHAR(106) NOT NULL, email VARCHAR(120) NOT NULL, UNIQUE KEY (email));"
+mariadb -u root -e "USE mailserver_test; CREATE TABLE IF NOT EXISTS virtual_aliases (id INT AUTO_INCREMENT PRIMARY KEY, domain_id INT NOT NULL, source VARCHAR(100) NOT NULL, destination VARCHAR(100) NOT NULL);"
+mariadb -u root -e "USE mailserver_test; INSERT INTO virtual_domains (id, name) VALUES (1, 'test.com');"
 
 echo -e "\nRunning tests...\n"
 
@@ -49,6 +49,6 @@ run_test "Missing password" "perl mailmanage.pl add-user -name test5 -database m
 run_test "Invalid database" "perl mailmanage.pl add-user -name test6 -password pass123 -database nonexistent_db" "connect"
 
 echo "Cleaning up test environment..."
-mysql -u root -e "DROP DATABASE mailserver_test;"
+mariadb -u root -e "DROP DATABASE mailserver_test;"
 
 echo "Tests completed."
