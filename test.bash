@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# filepath: h:\mailserver\test_mailmanage.sh
+# filepath: h:\mailserver\test.bash
 
 echo "Setting up test environment..."
 mariadb -u root -e "CREATE DATABASE IF NOT EXISTS mailserver_test;"
@@ -44,9 +44,9 @@ run_test "Add alias" "perl mailmanage.pl add-alias -source alias@test.com -desti
 
 # Error handling tests
 run_test "Invalid command" "perl mailmanage.pl invalid-command" "Unknown command"
-run_test "Missing username" "perl mailmanage.pl add-user -password pass123 -database mailserver_test" "username is required"
-run_test "Missing password" "perl mailmanage.pl add-user -name test5 -database mailserver_test" "password is required"
-run_test "Invalid database" "perl mailmanage.pl add-user -name test6 -password pass123 -database nonexistent_db" "connect"
+run_test "Missing username" "perl mailmanage.pl add-user -password pass123 -database mailserver_test" "-name <username> is required"
+run_test "Missing password" "perl mailmanage.pl add-user -name test5 -database mailserver_test" "-password <password> is required"
+run_test "Invalid database" "perl mailmanage.pl add-user -name test6 -password pass123 -database nonexistent_db" "Couldn't connect to database"
 
 echo "Cleaning up test environment..."
 mariadb -u root -e "DROP DATABASE mailserver_test;"
