@@ -159,8 +159,7 @@ sub add_alias {
 	}
 	
 
-	my newid = getMaxIdFromTable("virtual_aliases");
-    newid++;
+	my $newid = getMaxIdFromTable("virtual_aliases")+1;
     
     my $sth = $dbh->prepare(
         "INSERT INTO virtual_aliases (id, domain_id, source, destination) VALUES (?, ?, ?, ?)"
