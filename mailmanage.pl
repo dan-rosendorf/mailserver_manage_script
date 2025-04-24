@@ -74,7 +74,7 @@ GetOptions(
 	"database=s" => \$database, # database name
 	"domain=s"   => \$domain,   # mail domain
 	"name=s"     => \$username, # username
-	"password=s" => \$passwd    # password
+	"password=s" => \$passwd,    # password
 	"alias=s"   => \$alias,   # alias
 	"port=i"     => \$port,     # port number
 	"source=s"   => \$source,   # source
