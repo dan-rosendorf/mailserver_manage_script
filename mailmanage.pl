@@ -109,6 +109,11 @@ exit(0);
 sub add_user {
     my $newid = getMaxUserId() + 1;
 
+    if ($username =~ /\@/) {
+        my ($user,$domain)=split($username, '@');
+        
+    }
+
 	# Get domain IDs
 	my $domain_id = getDomainId($domain);
 	if (!$domain_id) {
@@ -286,8 +291,13 @@ sub connect_db {
 sub validate_params {
     my $cmd = shift;
     
+    $username = "hello\@hello\@hello";
+    $count = $username =~ tr/@//;
+    print "Count: $count\n";
+
     if ($cmd eq 'add-user' || $cmd eq 'change-password') {
         die "-name <username> is required\n" unless $username;
+        die "-name <username> must not contain more than one '@'\n" if ($username ~ tr/@// > 1);
         die "-password <password> is required\n" unless $passwd;
     } 
     elsif ($cmd eq 'remove-user') {
