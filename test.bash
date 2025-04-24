@@ -17,7 +17,7 @@ run_test() {
   echo "COMMAND: $2"
   output=$(eval $2 2>&1)
   echo "OUTPUT: $output"
-  if echo "$output" | grep -q "$3"; then
+  if echo "$output" | grep -q -- "$3"; then
     echo "RESULT: PASS"
   else
     echo "RESULT: FAIL - Expected: $3"
