@@ -11,6 +11,11 @@ mariadb -u root -e "USE mailserver_test; INSERT INTO virtual_domains (id, name) 
 
 echo -e "\nRunning tests...\n"
 
+# Initialize counters
+pass_count=0
+fail_count=0
+test_count=0
+
 # Function to run test and report result
 run_test() {
   echo "TEST: $1"
@@ -19,8 +24,12 @@ run_test() {
   echo "OUTPUT: $output"
   if echo "$output" | grep -q -- "$3"; then
     echo "RESULT: PASS"
+    ((pass_count++))
+    ((test_count++))
   else
     echo "RESULT: FAIL - Expected: $3"
+    ((fail_count++))
+    ((test_count++))
   fi
   echo -e "-----------------------------------\n"
 }
@@ -50,5 +59,10 @@ run_test "Invalid database" "perl mailmanage.pl add-user -name test6 -password p
 
 echo "Cleaning up test environment..."
 mariadb -u root -e "DROP DATABASE mailserver_test;"
+
+# Display summary
+echo -e "\nTest Summary:"
+echo "Passed: $pass_count"
+echo "Failed: $fail_count"
 
 echo "Tests completed."
