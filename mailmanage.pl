@@ -291,10 +291,6 @@ sub connect_db {
 sub validate_params {
     my $cmd = shift;
     
-    $username = "hello\@hello\@hello";
-    $count = $username =~ tr/@//;
-    print "Count: $count\n";
-
     if ($cmd eq 'add-user' || $cmd eq 'change-password') {
         die "-name <username> is required\n" unless $username;
         die "-name <username> must not contain more than one '@'\n" if ($username ~ tr/@// > 1);
