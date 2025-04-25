@@ -293,7 +293,7 @@ sub validate_params {
     
     if ($cmd eq 'add-user' || $cmd eq 'change-password') {
         die "-name <username> is required\n" unless $username;
-        die "-name <username> must not contain more than one '@'\n" if ($username ~ tr/@// > 1);
+        die "-name <username> must not contain more than one '@'\n" if ($username =~ tr/@// > 1);
         die "-password <password> is required\n" unless $passwd;
     } 
     elsif ($cmd eq 'remove-user') {
