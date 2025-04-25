@@ -157,6 +157,7 @@ sub add_alias {
     my ($source_user, $source_domain) = split('@', $source);
     $source_domain ||= $domain;
 
+
 	my $domain_id = getDomainId($source_domain);
 	if(!$domain_id){
 		print "Couldn't find domain $source_domain\n";
@@ -170,7 +171,7 @@ sub add_alias {
         "INSERT INTO virtual_aliases (id, domain_id, source, destination) VALUES (?, ?, ?, ?)"
     );
     
-    $sth->execute($domain_id, $source, $destination);
+    $sth->execute($newid,$domain_id, $source, $destination);
     print "Alias from $source to $destination added successfully\n";
 }
 
